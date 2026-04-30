@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cassper — La plata que pierdes, visible.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── TOKENS (exactos del design system) ───────────────────── */
+    :root {
+      --bg:             #0A0A0A;
+      --surface:        #171717;
+      --card:           #262626;
+      --hairline:       #262626;
+      --hairline-soft:  #171717;
+      --border-strong:  #404040;
+      --text-primary:   #FAFAFA;
+      --text-secondary: #A3A3A3;
+      --text-mute:      #737373;
+      --accent:         #FFFFFF;
+      --accent-glow:    rgba(255,255,255,0.12);
+      --accent-bg:      rgba(255,255,255,0.06);
+      --green:          #4ADE80;
+      --amber:          #FBBF24;
+      --red:            #F87171;
+      --radius:         6px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Grid de fondo */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(38,38,38,0.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(38,38,38,0.5) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+    }
+
+    /* ─── LAYOUT ────────────────────────────────────────────────── */
+    .page { position: relative; z-index: 1; }
+
+    /* ─── NAV ───────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 60px;
+      background: rgba(10,10,10,0.85);
+      border-bottom: 1px solid var(--hairline);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px; font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px; color: var(--text-mute);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-cta {
+      display: flex; gap: 10px;
+    }
+
+    /* ─── BOTONES ───────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; border: 1px solid transparent;
+      text-decoration: none;
+      transition: box-shadow 0.2s, filter 0.2s, border-color 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0A0A0A;
+      border-color: var(--accent);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      filter: brightness(0.96);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.18), 0 0 48px rgba(255,255,255,0.08);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border-color: var(--hairline);
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+    }
+
+    .btn-sm { padding: 8px 16px; font-size: 12px; }
+
+    /* ─── LIVE DOT ──────────────────────────────────────────────── */
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(255,255,255,0.5);
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECCIÓN 1 · HERO
+    ═══════════════════════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 48px 80px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 500;
+      color: var(--text-mute);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 36px;
+      padding: 6px 14px;
+      border: 1px solid var(--hairline);
+      border-radius: 20px;
+      background: var(--surface);
+    }
+
+    .hero-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(48px, 7vw, 84px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 28px;
+      max-width: 820px;
+    }
+
+    .hero-heading .accent { color: var(--accent); }
+
+    .hero-sub {
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 44px;
+    }
+
+    .hero-actions {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 80px;
+    }
+
+    .hero-stats {
+      display: flex; gap: 0;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .hero-stat {
+      padding: 16px 32px;
+      border-right: 1px solid var(--hairline);
+      text-align: center;
+    }
+    .hero-stat:last-child { border-right: none; }
+
+    .hero-stat-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 28px; font-weight: 600;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat-label {
+      font-size: 11px; color: var(--text-mute);
+      text-transform: uppercase; letter-spacing: 0.07em;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECCIÓN 2 · BENTO GRID
+    ═══════════════════════════════════════════════════════════════ */
+    .bento-section {
+      padding: 0 48px 120px;
+    }
+
+    .bento-label {
+      font-size: 11px; font-weight: 500;
+      color: var(--text-mute);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 340px 280px;
+      gap: 10px;
+    }
+
+    /* Celdas del bento */
+    .bento-cell {
+      border-radius: calc(var(--radius) * 2);
+      overflow: hidden;
+      border: 1px solid var(--hairline);
+      position: relative;
+    }
+
+    .bento-cell-wide { grid-column: span 2; }
+    .bento-cell-tall { grid-row: span 2; }
+
+    /* ── Celda foto + mockup ──────────────────────────────────── */
+    .bento-mock {
+      position: relative;
+      width: 100%; height: 100%;
+      background: var(--surface);
+    }
+
+    .bento-mock-photo {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: saturate(0.85) brightness(0.92);
+    }
+
+    .bento-mock-tint {
+      position: absolute; inset: 0;
+      background: rgba(7,8,10,0.05);
+      z-index: 1;
+    }
+
+    /* Laptop mockup dentro del bento */
+    .bento-laptop {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .bl-wrap {
+      width: min(72%, 340px);
+      filter: drop-shadow(0 12px 32px rgba(0,0,0,0.7));
+    }
+
+    .bl-frame {
+      background: #0E0E0E;
+      border-radius: 8px 8px 0 0;
+      border: 1.5px solid #2a2a2a;
+      padding: 8px;
+      position: relative;
+    }
+
+    .bl-cam {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #1a1a1a;
+      margin: 0 auto 6px;
+    }
+
+    .bl-screen {
+      background: #0A0A0A;
+      border-radius: 4px;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      padding: 10px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+
+    .bl-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #1f1f1f;
+    }
+    .bl-logo { font-family: 'Plus Jakarta Sans',sans-serif; font-size: 8px; font-weight: 600; color: #fafafa; letter-spacing: -0.02em; }
+    .bl-dot { width: 4px; height: 4px; border-radius: 50%; background: #fff; opacity: 0.9; }
+
+    .bl-lines { display: flex; flex-direction: column; gap: 4px; margin-top: 2px; }
+    .bl-line { height: 3px; background: #1f1f1f; border-radius: 2px; }
+    .bl-line.accent { background: rgba(255,255,255,0.4); max-width: 60%; }
+
+    .bl-stats {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 4px;
+      margin-top: auto;
+    }
+    .bl-stat { background: #171717; border-radius: 3px; padding: 5px 4px; text-align: center; }
+    .bl-stat-num { font-family: 'Plus Jakarta Sans',sans-serif; font-size: 8px; font-weight: 600; color: #fafafa; letter-spacing: -0.02em; }
+    .bl-stat-cap { font-size: 6px; color: #737373; margin-top: 1px; }
+
+    .bl-base {
+      height: 8px;
+      background: linear-gradient(to bottom, #1a1a1a, #111);
+      border-radius: 0 0 4px 4px;
+      border: 1.5px solid #2a2a2a;
+      border-top: none;
+    }
+
+    /* Phone mockup dentro del bento */
+    .bento-phone {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .bp-wrap {
+      width: min(42%, 130px);
+      filter: drop-shadow(0 12px 32px rgba(0,0,0,0.7));
+    }
+
+    .bp-shell {
+      background: #0E0E0E;
+      border-radius: 18px;
+      border: 1.5px solid #2a2a2a;
+      padding: 6px;
+    }
+
+    .bp-screen {
+      background: #0A0A0A;
+      border-radius: 13px;
+      aspect-ratio: 9 / 19;
+      overflow: hidden;
+      padding: 8px 6px;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+
+    .bp-notch { width: 30px; height: 4px; background: #1a1a1a; border-radius: 2px; margin: 0 auto 4px; }
+
+    .bp-header {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .bp-logo { font-family: 'Plus Jakarta Sans',sans-serif; font-size: 7px; font-weight: 600; color: #fafafa; }
+    .bp-dot { width: 3px; height: 3px; border-radius: 50%; background: #fff; }
+
+    .bp-rows { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+    .bp-row {
+      display: flex; align-items: center; gap: 4px;
+      padding: 4px;
+      background: #171717; border-radius: 3px;
+    }
+    .bp-pill { width: 6px; height: 6px; border-radius: 50%; background: #737373; flex-shrink: 0; }
+    .bp-pill.hot { background: rgba(255,255,255,0.6); }
+    .bp-line { flex: 1; height: 2px; background: #262626; border-radius: 1px; }
+    .bp-num { font-size: 7px; color: #a3a3a3; font-weight: 500; }
+
+    /* ── Celda texto / stat ──────────────────────────────────────── */
+    .bento-stat {
+      background: var(--surface);
+      padding: 32px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      height: 100%;
+    }
+
+    .bento-stat-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 56px; font-weight: 700;
+      letter-spacing: -0.05em; line-height: 1;
+      color: var(--text-primary);
+    }
+
+    .bento-stat-label {
+      font-size: 10px; color: var(--text-mute);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+
+    .bento-stat-sub {
+      font-size: 13px; color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ── Celda feature copy ──────────────────────────────────────── */
+    .bento-copy {
+      background: var(--card);
+      padding: 32px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      height: 100%;
+    }
+
+    .bento-copy-icon {
+      width: 36px; height: 36px; border-radius: var(--radius);
+      background: var(--accent-bg);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      margin-bottom: auto;
+    }
+
+    .bento-copy-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px; font-weight: 600;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .bento-copy-desc {
+      font-size: 13px; color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Celda dark accent ───────────────────────────────────────── */
+    .bento-dark {
+      background: #111;
+      padding: 32px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      height: 100%;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECCIÓN 3 · CTA FINAL
+    ═══════════════════════════════════════════════════════════════ */
+    .cta-section {
+      padding: 120px 48px;
+      text-align: center;
+      border-top: 1px solid var(--hairline);
+      display: flex; flex-direction: column; align-items: center; gap: 32px;
+    }
+
+    .cta-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      max-width: 640px;
+    }
+
+    .cta-sub {
+      font-size: 16px; color: var(--text-secondary);
+      max-width: 440px; line-height: 1.65;
+    }
+
+    .cta-actions { display: flex; gap: 12px; }
+
+    .cta-note {
+      font-size: 12px; color: var(--text-mute);
+    }
+
+    /* ─── FOOTER MÍNIMO ─────────────────────────────────────────── */
+    footer {
+      padding: 24px 48px;
+      border-top: 1px solid var(--hairline);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-mute);
+    }
+
+    .footer-note {
+      font-size: 12px; color: var(--text-mute);
+    }
+
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── NAV ──────────────────────────────────────────────────────── -->
+  <nav>
+    <div class="nav-logo">Cassper</div>
+    <ul class="nav-links">
+      <li><a href="#">Producto</a></li>
+      <li><a href="#">Precios</a></li>
+      <li><a href="#">Casos de uso</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-secondary btn-sm">Iniciar sesión</a>
+      <a href="#" class="btn btn-primary btn-sm">Ver demo</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECCIÓN 1 · HERO
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="hero">
+
+    <div class="hero-eyebrow">
+      <div class="live-dot"></div>
+      Potenciado por Genia · IA en tiempo real
+    </div>
+
+    <h1 class="hero-heading">
+      La plata que pierdes<br>en conversaciones,<br><span class="accent">visible ahora.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Cassper analiza cada interacción con tus clientes, detecta intenciones de compra y avisa antes de que la oportunidad se vaya.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary">Ver demo en vivo</a>
+      <a href="#" class="btn btn-secondary">Cómo funciona</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">$402K</div>
+        <div class="hero-stat-label">Recuperado este mes</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">1.247</div>
+        <div class="hero-stat-label">Conversaciones activas</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">34.7%</div>
+        <div class="hero-stat-label">Tasa de recuperación</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECCIÓN 2 · BENTO GRID
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="bento-section">
+
+    <div class="bento-label">Cassper en acción</div>
+
+    <div class="bento">
+
+      <!-- Celda 1: Laptop mockup (2 cols) -->
+      <div class="bento-cell bento-cell-wide">
+        <div class="bento-mock">
+          <img class="bento-mock-photo"
+            src="design-system-assets/ambient/fog-mountains.jpg"
+            alt="Montañas con niebla">
+          <div class="bento-mock-tint"></div>
+          <div class="bento-laptop">
+            <div class="bl-wrap">
+              <div class="bl-frame">
+                <div class="bl-cam"></div>
+                <div class="bl-screen">
+                  <div class="bl-header">
+                    <span class="bl-logo">Cassper</span>
+                    <span class="bl-dot"></span>
+                  </div>
+                  <div class="bl-lines">
+                    <div class="bl-line accent"></div>
+                    <div class="bl-line" style="max-width:85%"></div>
+                    <div class="bl-line" style="max-width:55%"></div>
+                  </div>
+                  <div class="bl-stats">
+                    <div class="bl-stat">
+                      <div class="bl-stat-num">$127K</div>
+                      <div class="bl-stat-cap">fuga · 7d</div>
+                    </div>
+                    <div class="bl-stat">
+                      <div class="bl-stat-num">892</div>
+                      <div class="bl-stat-cap">activas</div>
+                    </div>
+                    <div class="bl-stat">
+                      <div class="bl-stat-num">$402K</div>
+                      <div class="bl-stat-cap">recup.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="bl-base"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Celda 2: Stat grande -->
+      <div class="bento-cell">
+        <div class="bento-stat">
+          <div>
+            <div class="bento-stat-label">Fuga detectada</div>
+          </div>
+          <div>
+            <div class="bento-stat-num">$12.1K</div>
+            <div class="bento-stat-sub" style="margin-top:12px;">8 conversaciones sin seguimiento esta semana.</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:5px;height:5px;border-radius:50%;background:var(--red);"></div>
+            <span style="font-size:11px;color:var(--text-mute);">Alerta activa</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Celda 3: Feature copy -->
+      <div class="bento-cell">
+        <div class="bento-copy">
+          <div style="margin-bottom:auto;padding-bottom:24px;"><div style="width:32px;height:2px;background:var(--accent);border-radius:1px;"></div></div>
+          <div>
+            <div class="bento-copy-title">Detección en tiempo real</div>
+            <div class="bento-copy-desc">Identifica intenciones de compra mientras ocurre la conversación, no después.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Celda 4: Móvil mockup (2 cols) -->
+      <div class="bento-cell bento-cell-wide">
+        <div class="bento-mock">
+          <img class="bento-mock-photo"
+            src="design-system-assets/ambient/alpine-lake-calm.jpg"
+            alt="Lago alpino calmo">
+          <div class="bento-mock-tint"></div>
+          <div class="bento-phone">
+            <div class="bp-wrap">
+              <div class="bp-shell">
+                <div class="bp-screen">
+                  <div class="bp-notch"></div>
+                  <div class="bp-header">
+                    <span class="bp-logo">Cassper</span>
+                    <span class="bp-dot"></span>
+                  </div>
+                  <div class="bp-rows">
+                    <div class="bp-row">
+                      <span class="bp-pill hot"></span>
+                      <div class="bp-line"></div>
+                      <span class="bp-num">$18.4K</span>
+                    </div>
+                    <div class="bp-row">
+                      <span class="bp-pill ok" style="background:rgba(74,222,128,0.6);"></span>
+                      <div class="bp-line" style="max-width:55%"></div>
+                      <span class="bp-num">184</span>
+                    </div>
+                    <div class="bp-row">
+                      <span class="bp-pill" style="background:rgba(251,191,36,0.5);"></span>
+                      <div class="bp-line" style="max-width:70%"></div>
+                      <span class="bp-num">3</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Celda 5: Feature copy 2 -->
+      <div class="bento-cell">
+        <div class="bento-copy">
+          <div style="margin-bottom:auto;padding-bottom:24px;"><div style="width:32px;height:2px;background:var(--accent);border-radius:1px;"></div></div>
+          <div>
+            <div class="bento-copy-title">Desde móvil y desktop</div>
+            <div class="bento-copy-desc">Monitorea tu pipeline de conversaciones donde estés, sin fricción.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECCIÓN 3 · CTA FINAL
+  ═══════════════════════════════════════════════════════════════ -->
+  <section class="cta-section">
+
+    <h2 class="cta-heading">
+      Empieza a ver<br>lo que se te <span style="color:var(--accent);">está yendo.</span>
+    </h2>
+
+    <p class="cta-sub">
+      Conecta Cassper a tus canales de atención en minutos. Sin integración compleja, sin datos históricos requeridos.
+    </p>
+
+    <div class="cta-actions">
+      <a href="#" class="btn btn-primary" style="padding:13px 28px; font-size:14px;">Empezar gratis</a>
+      <a href="#" class="btn btn-secondary" style="padding:13px 28px; font-size:14px;">Hablar con ventas</a>
+    </div>
+
+    <div class="cta-note">Sin tarjeta de crédito · Prueba de 14 días</div>
+
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-brand">Cassper</div>
+    <div class="footer-note">© 2025 Cassper · Potenciado por Genia</div>
+  </footer>
+
+</div>
+</body>
+</html>

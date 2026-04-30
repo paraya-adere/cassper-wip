@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cassper · Color Sandbox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── ACENTO ────────────────────────────────────────────────────────────
+       Cambiá SOLO este bloque para probar distintos acentos.
+       Comentá la línea activa y descomentá la que quieras probar.
+    ──────────────────────────────────────────────────────────────────────── */
+    :root {
+      /* Monochrome · blanco puro — igual que --primary en VOC dark monochrome */
+      --accent:      #FFFFFF;
+      --accent-glow: rgba(255,255,255,0.12);
+      --accent-bg:   rgba(255,255,255,0.06);
+
+      /* Opción A · Gold cobrizo — beta-0.1
+      --accent:      #D4A574;
+      --accent-glow: rgba(212,165,116,0.18);
+      --accent-bg:   rgba(212,165,116,0.06); */
+
+      /* Opción B · Violeta IA — beta-0.1 theme-ai
+      --accent:      #A78BFA;
+      --accent-glow: rgba(167,139,250,0.18);
+      --accent-bg:   rgba(167,139,250,0.06); */
+
+      /* Opción C · Índigo claro — adereso-v1 theme-ai
+      --accent:      #818CF8;
+      --accent-glow: rgba(129,140,248,0.18);
+      --accent-bg:   rgba(129,140,248,0.06); */
+
+      /* Opción D · Cyan original Cassper
+      --accent:      #6BE9F2;
+      --accent-glow: rgba(107,233,242,0.18);
+      --accent-bg:   rgba(107,233,242,0.06); */
+    }
+
+    /* ─── TOKENS BASE ───────────────────────────────────────────────────── */
+    /* Monochrome dark exacto (VOC color-themes.css):                        */
+    /* bg-page #0a0a0a · bg-surface #171717 · bg-surface-secondary #262626   */
+    :root {
+      --bg:             #0A0A0A;  /* --bg-page            */
+      --surface:        #171717;  /* --bg-surface          */
+      --card:           #262626;  /* --bg-surface-secondary*/
+      --hairline:       #262626;  /* --border-default      */
+      --hairline-soft:  #171717;  /* --border-subtle       */
+      --border-strong:  #404040;  /* --border-strong       */
+      --text-primary:   #FAFAFA;  /* --text-primary        */
+      --text-secondary: #A3A3A3;  /* --text-secondary      */
+      --text-mute:      #737373;  /* --text-muted          */
+      --text-disabled:  #525252;  /* --text-disabled       */
+      --radius:         6px;      /* --radius              */
+      /* Semánticos: mantenemos color real (Cassper es producto de datos) */
+      --green:          #4ADE80;
+      --amber:          #FBBF24;
+      --red:            #F87171;
+      --fill-neutral:   #262626;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      padding: 48px 0 96px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(31,35,44,0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31,35,44,0.35) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none; z-index: 0;
+    }
+
+    .wrap {
+      position: relative; z-index: 1;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+
+    /* ─── TIPO ────────────────────────────────────────────────────── */
+    .label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.10em; text-transform: uppercase;
+      color: var(--text-mute);
+      margin-bottom: 20px;
+    }
+
+    /* ─── CARD ────────────────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+    }
+
+    /* ─── SWATCH ROW ──────────────────────────────────────────────── */
+    .swatch-row {
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;
+    }
+    .swatch {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .swatch-dot {
+      width: 48px; height: 48px; border-radius: 50%;
+    }
+    .swatch-name {
+      font-size: 10px; color: var(--text-mute);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ─── TYPOGRAPHY MUESTRA ─────────────────────────────────────── */
+    .type-stack { display: flex; flex-direction: column; gap: 20px; }
+    .t-display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 48px; font-weight: 600;
+      letter-spacing: -0.03em; line-height: 1.1;
+    }
+    .t-h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 28px; font-weight: 500;
+      letter-spacing: -0.025em; line-height: 1.3;
+    }
+    .t-body { font-size: 15px; line-height: 1.65; color: var(--text-secondary); }
+    .t-mono {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px; letter-spacing: 0.04em;
+      color: var(--text-mute); text-transform: uppercase;
+    }
+    .accent { color: var(--accent); }
+
+    /* ─── BOTONES ─────────────────────────────────────────────────── */
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 500; letter-spacing: 0.01em;
+      cursor: pointer; border: 1px solid transparent; text-decoration: none;
+      transition: box-shadow 0.2s, background 0.2s, border-color 0.2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0A0A0A;
+      border-color: var(--accent);
+      box-shadow: 0 0 18px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      filter: brightness(0.96);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.18), 0 0 48px rgba(255,255,255,0.08);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border-color: var(--hairline);
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-mute);
+      border-color: var(--hairline-soft);
+    }
+
+    /* ─── BADGE ──────────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border-radius: 6px;
+      font-size: 11px; font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--card);
+      border: 1px solid var(--hairline);
+      color: var(--text-secondary);
+    }
+    .badge-accent {
+      color: var(--text-secondary);
+    }
+    .badge-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent);
+    }
+    .badge-green { color: var(--text-secondary); }
+    .badge-green::before { content: ''; display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); margin-right:2px; }
+    .badge-red   { color: var(--text-secondary); }
+    .badge-red::before   { content: ''; display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--red);   margin-right:2px; }
+
+    /* ─── STAT CELLS ─────────────────────────────────────────────── */
+    .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: var(--radius); overflow: hidden; }
+    .stat-cell {
+      background: var(--card);
+      padding: 28px 28px 24px;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .stat-eyebrow {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--text-mute);
+      margin-bottom: 16px;
+    }
+    .stat-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 40px; font-weight: 600;
+      letter-spacing: -0.04em; line-height: 1;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .stat-value.is-accent { color: var(--accent); }
+    .stat-footer {
+      display: flex; align-items: center; gap: 6px;
+      margin-top: auto;
+    }
+    .stat-trend {
+      font-size: 11px; font-weight: 500;
+      padding: 2px 7px; border-radius: var(--radius);
+    }
+    .stat-trend.up   { background: rgba(74,222,128,0.08);  color: var(--green); }
+    .stat-trend.down { background: rgba(248,113,113,0.08); color: var(--red); }
+    .stat-desc { font-size: 12px; color: var(--text-mute); }
+    .c-accent { color: var(--accent); }
+
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent-glow);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; } 50% { opacity:0.3; }
+    }
+
+
+    /* ─── HERO SNIPPET ───────────────────────────────────────────── */
+    .hero {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: calc(var(--radius) * 2);
+      padding: 56px 48px;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; color: var(--text-mute);
+      text-transform: uppercase; letter-spacing: 0.09em;
+      margin-bottom: 28px;
+    }
+    .hero-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 52px; font-weight: 600;
+      letter-spacing: -0.03em; line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero-body {
+      font-size: 16px; color: var(--text-secondary);
+      line-height: 1.65; max-width: 480px;
+      margin-bottom: 36px;
+    }
+
+    /* ─── FUNNEL ─────────────────────────────────────────────────── */
+    .funnel { display: flex; flex-direction: column; gap: 14px; }
+    .funnel-row { display: flex; flex-direction: column; gap: 6px; }
+    .funnel-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); }
+    .funnel-pct { color: var(--text-mute); }
+    .funnel-track {
+      height: 6px; background: var(--fill-neutral);
+      border-radius: 3px; overflow: hidden;
+    }
+    .funnel-fill {
+      height: 100%; border-radius: 3px;
+      background: var(--accent);
+      opacity: 0.6;
+    }
+    .funnel-fill.green { background: var(--green); }
+    .funnel-fill.red   { background: var(--red); }
+
+    /* ─── FOOTER NOTE ────────────────────────────────────────────── */
+    .note {
+      font-size: 12px; color: var(--text-mute);
+      border-top: 1px solid var(--hairline);
+      padding-top: 24px;
+      line-height: 1.6;
+    }
+    .note code {
+      font-family: 'DM Sans', monospace; font-size: 11px;
+      background: var(--card); padding: 1px 6px; border-radius: 4px;
+      color: var(--accent);
+    }
+
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ── HEADER ─────────────────────────────────────────────────────── -->
+  <div>
+    <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:28px; font-weight:600; letter-spacing:-0.03em; margin-bottom:8px;">
+      Cassper · <span class="accent">Color Sandbox</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-mute);">
+      Cambiá las variables <code style="font-family:monospace;font-size:11px;color:var(--accent);">--accent / --accent-glow / --accent-bg</code> al inicio del CSS para probar otras opciones.
+    </div>
+  </div>
+
+  <!-- ── SWATCHES ───────────────────────────────────────────────────── -->
+  <div>
+    <div class="label">Paleta activa</div>
+    <div class="swatch-row">
+      <div class="swatch">
+        <div class="swatch-dot" style="background:var(--accent); box-shadow:0 0 16px var(--accent-glow);"></div>
+        <div class="swatch-name">Acento</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-dot" style="background:var(--accent-bg); border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);"></div>
+        <div class="swatch-name">Acento BG</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-dot" style="background:var(--text-primary);"></div>
+        <div class="swatch-name">Texto</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-dot" style="background:var(--text-secondary);"></div>
+        <div class="swatch-name">Secundario</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-dot" style="background:var(--surface); border:1px solid var(--hairline);"></div>
+        <div class="swatch-name">Surface</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-dot" style="background:var(--card); border:1px solid var(--hairline);"></div>
+        <div class="swatch-name">Card</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-dot" style="background:var(--border-strong);"></div>
+        <div class="swatch-name">Borde +</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-dot" style="background:var(--green);"></div>
+        <div class="swatch-name">Verde</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-dot" style="background:var(--amber);"></div>
+        <div class="swatch-name">Ámbar</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-dot" style="background:var(--red);"></div>
+        <div class="swatch-name">Rojo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TIPOGRAFÍA ─────────────────────────────────────────────────── -->
+  <div>
+    <div class="label">Tipografía</div>
+    <div class="type-stack">
+      <div class="t-display">
+        La plata que se<br><span class="accent">pierde</span>, visible.
+      </div>
+      <div class="t-h2">
+        Detecta. Cuantifica. <span class="accent">Recupera.</span>
+      </div>
+      <div class="t-body">
+        Cassper analiza conversaciones en tiempo real e identifica oportunidades de venta perdidas con probabilidad de cierre y monto estimado.
+      </div>
+      <div class="t-mono">Módulo de análisis · Sesión activa · 1.247 eventos</div>
+    </div>
+  </div>
+
+  <!-- ── BOTONES ────────────────────────────────────────────────────── -->
+  <div>
+    <div class="label">Botones</div>
+    <div class="btn-row">
+      <button class="btn btn-primary">Ver oportunidades</button>
+      <button class="btn btn-secondary">Exportar informe</button>
+      <button class="btn btn-ghost">Configurar</button>
+      <span class="badge badge-accent">
+        <span class="badge-dot"></span>Sistema activo
+      </span>
+      <span class="badge badge-green">+12.4%</span>
+      <span class="badge badge-red">−$12.1K</span>
+      <span class="badge">Semana en curso</span>
+    </div>
+  </div>
+
+  <!-- ── STAT CELLS ─────────────────────────────────────────────────── -->
+  <div>
+    <div class="label">Stat Cells</div>
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="stat-eyebrow">Intenciones detectadas</div>
+        <div class="stat-value is-accent">247</div>
+        <div class="stat-footer">
+          <span class="stat-trend up">+18%</span>
+          <span class="stat-desc">vs. semana anterior</span>
+        </div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-eyebrow">Fuga detectada</div>
+        <div class="stat-value">$12.1K</div>
+        <div class="stat-footer">
+          <span class="stat-trend down">8 conv.</span>
+          <span class="stat-desc">sin seguimiento</span>
+        </div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-eyebrow">Recuperado este mes</div>
+        <div class="stat-value">$4.2K</div>
+        <div class="stat-footer">
+          <span class="stat-trend up">34.7%</span>
+          <span class="stat-desc">tasa de recuperación</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HERO SNIPPET ───────────────────────────────────────────────── -->
+  <div>
+    <div class="label">Hero · Ejemplo aplicado</div>
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <div class="live-dot"></div>
+        Cassper Intelligence · v2.1 · Activo
+      </div>
+      <div class="hero-heading">
+        La plata que pierdes<br>en conversaciones,<br><span class="accent">visible ahora.</span>
+      </div>
+      <div class="hero-body">
+        Detecta intenciones de compra en tiempo real, cuantifica la oportunidad y avisa antes de que el cliente se vaya.
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary">Ver demo en vivo</button>
+        <button class="btn btn-secondary">Leer más</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FUNNEL ─────────────────────────────────────────────────────── -->
+  <div>
+    <div class="label">Funnel Bars</div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:500;margin-bottom:24px;">Embudo de conversión · Semana actual</div>
+      <div class="funnel">
+        <div class="funnel-row">
+          <div class="funnel-meta"><span>Conversaciones iniciadas</span><span>1.247</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:100%;"></div></div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-meta"><span>Con intención detectada</span><span>847 <span class="funnel-pct">68%</span></span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:68%; background:var(--amber); opacity:0.55;"></div></div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-meta"><span>Atendidas a tiempo</span><span>312 <span class="funnel-pct">25%</span></span></div>
+          <div class="funnel-track"><div class="funnel-fill red" style="width:25%; opacity:0.55;"></div></div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-meta"><span>Ventas concretadas</span><span>142 <span class="funnel-pct">11.3%</span></span></div>
+          <div class="funnel-track"><div class="funnel-fill green" style="width:11.3%; opacity:0.65;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NOTA ───────────────────────────────────────────────────────── -->
+  <div class="note">
+    Para probar otro acento: buscá el bloque <code>/* ─── ACENTO ───</code> al inicio del CSS,
+    comentá la línea activa y descomentá la opción que quieras. —
+    <strong>Activo:</strong> Cyan (original Cassper) ·
+    <strong>A</strong> Gold cobrizo (beta-0.1) ·
+    <strong>B</strong> Violeta IA (beta-0.1 theme-ai) ·
+    <strong>C</strong> Índigo claro (adereso-v1) ·
+    <strong>D</strong> Índigo saturado (adereso-v1).
+    La base oscura ya está alineada con <em>adereso-v1 dark</em>.
+    Una vez que elijas, lo llevamos al design system principal.
+  </div>
+
+</div>
+</body>
+</html>

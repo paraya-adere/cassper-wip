@@ -226,7 +226,7 @@
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center;
-      padding: 140px 48px 100px;
+      padding: 140px 48px 0;
       position: relative;
       overflow: hidden;
     }
@@ -363,43 +363,243 @@
       margin-bottom: 64px;
     }
 
-    .hero-dashboard {
+    /* ── Hero product mockup ── */
+    .hero-mockup-wrap {
+      position: relative;
+      width: 100%; max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-mockup-frame {
       background: var(--surface);
       border: 1px solid var(--hairline);
-      border-radius: calc(var(--radius) * 2);
+      border-radius: 14px;
       overflow: hidden;
-      max-width: 520px;
-      width: 100%;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
     }
-
-    .hero-dash-bar {
+    .hero-mockup-bar {
+      display: flex; align-items: center; gap: 6px;
       padding: 10px 16px;
       border-bottom: 1px solid var(--hairline);
+      background: var(--card);
+    }
+    .dash-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .hero-mockup-url {
+      font-size: 11px; color: var(--text-mute);
+      margin-left: 8px; letter-spacing: 0.02em;
+    }
+    /* ── Dashboard mockup inner ── */
+    .dmk {
+      display: grid; grid-template-columns: 180px 1fr;
+      background: #111; min-height: 420px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .dmk-sidebar {
+      background: #0D0D0D; border-right: 1px solid rgba(255,255,255,0.07);
+      padding: 14px 10px; display: flex; flex-direction: column; gap: 2px;
+    }
+    .dmk-brand {
       display: flex; align-items: center; gap: 8px;
-    }
-
-    .dash-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-    .hero-dash-url {
-      font-size: 11px; color: var(--text-mute);
-      margin-left: 8px;
-    }
-
-    .hero-dash-body {
-      padding: 28px 32px;
-    }
-
-    .hero-dash-label {
-      font-size: 11px; color: var(--text-mute);
-      text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 6px 8px 14px; border-bottom: 1px solid rgba(255,255,255,0.07);
       margin-bottom: 10px;
     }
+    .dmk-brand-avatar {
+      width: 24px; height: 24px; border-radius: 6px;
+      background: #2a2a2a; color: #888; font-size: 9px;
+      font-weight: 700; display: flex; align-items: center; justify-content: center;
+    }
+    .dmk-brand-name { font-size: 12px; font-weight: 600; color: #ccc; }
+    .dmk-section-label {
+      font-size: 9px; color: #444; letter-spacing: 0.1em;
+      padding: 4px 10px 2px; font-weight: 600;
+    }
+    .dmk-nav { display: flex; flex-direction: column; gap: 1px; }
+    .dmk-nav-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; color: #666; padding: 6px 10px;
+      border-radius: 6px; cursor: pointer; white-space: nowrap;
+    }
+    .dmk-nav-active {
+      background: rgba(255,255,255,0.07); color: #e0e0e0;
+    }
+    .dmk-genia {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; color: #555;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px; padding: 6px 10px; margin-top: 4px; cursor: pointer;
+    }
+    .dmk-genia-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: #4ADE80; flex-shrink: 0;
+    }
+    .dmk-genia-kbd {
+      margin-left: auto; font-size: 9px; color: #333;
+      background: rgba(255,255,255,0.05); padding: 1px 5px; border-radius: 3px;
+    }
 
-    .hero-dash-num {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 44px; font-weight: 700;
-      letter-spacing: -0.05em; line-height: 1;
-      color: var(--red);
+    .dmk-main {
+      padding: 14px 20px; overflow: hidden; display: flex; flex-direction: column; gap: 10px;
+    }
+    .dmk-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .dmk-topbar-title {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 14px; font-weight: 700; color: #e0e0e0;
+    }
+    .dmk-topbar-date {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; color: #555; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 6px; padding: 4px 10px;
+    }
+    .dmk-subtitle { font-size: 11px; color: #555; }
+
+    .dmk-channels {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px; padding: 8px 14px;
+    }
+    .dmk-ch-total .dmk-ch-num { font-size: 18px; font-weight: 700; color: #ddd; line-height: 1; }
+    .dmk-ch-total .dmk-ch-label { font-size: 8px; color: #444; letter-spacing: 0.08em; }
+    .dmk-ch-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.07); margin: 0 6px; }
+    .dmk-ch-item { display: flex; align-items: center; gap: 4px; }
+    .dmk-ch-icon { font-size: 11px; color: #555; }
+    .dmk-ch-label { font-size: 9px; font-weight: 600; color: #555; letter-spacing: 0.04em; }
+    .dmk-ch-v { font-size: 12px; font-weight: 600; color: #999; }
+
+    .dmk-kpis {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+    }
+    .dmk-kpi {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px; padding: 10px 12px;
+    }
+    .dmk-kpi-highlight { border-color: rgba(74,222,128,0.2); background: rgba(74,222,128,0.04); }
+    .dmk-kpi-label { font-size: 9px; color: #555; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+    .dmk-kpi-label::before { content: '⊙'; font-size: 9px; }
+    .dmk-kpi-num { font-size: 18px; font-weight: 700; color: #ccc; line-height: 1.1; }
+    .dmk-kpi-pct { font-size: 12px; font-weight: 400; color: #4ADE80; }
+    .dmk-green { color: #4ADE80; }
+    .dmk-red { color: #F87171; }
+    .dmk-amber { color: #FBBF24; }
+
+    .dmk-table-header {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; font-weight: 600; color: #bbb;
+    }
+    .dmk-table-actions { display: flex; gap: 8px; align-items: center; }
+    .dmk-search {
+      font-size: 10px; color: #444; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 5px; padding: 3px 10px; background: rgba(255,255,255,0.03);
+    }
+    .dmk-btn-green {
+      font-size: 10px; font-weight: 600; color: #000;
+      background: #4ADE80; border-radius: 5px; padding: 3px 10px;
+    }
+    .dmk-table-sub { font-size: 10px; color: #444; margin-top: -6px; }
+
+    .dmk-table {
+      width: 100%; border-collapse: collapse; font-size: 10px;
+    }
+    .dmk-table th {
+      color: #444; font-size: 9px; letter-spacing: 0.07em; font-weight: 600;
+      padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.06);
+      text-align: left;
+    }
+    .dmk-table td {
+      padding: 6px 8px; color: #888; border-bottom: 1px solid rgba(255,255,255,0.04);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;
+    }
+    .dmk-table tr:hover td { background: rgba(255,255,255,0.025); }
+    .dmk-ch-pill { font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 10px; }
+    .dmk-wa { color: #4ADE80; background: rgba(74,222,128,0.1); }
+    .dmk-badge { font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 4px; }
+    .dmk-badge-red { background: rgba(248,113,113,0.15); color: #F87171; }
+    .dmk-badge-red-o { background: rgba(248,113,113,0.08); color: #F87171; border: 1px solid rgba(248,113,113,0.2); }
+    .dmk-badge-amber-o { background: rgba(251,191,36,0.08); color: #FBBF24; border: 1px solid rgba(251,191,36,0.2); }
+    .dmk-td-prod { color: #bbb; }
+    .dmk-td-val { color: #ccc; font-weight: 600; }
+    /* ── DMK Panels ── */
+    .dmk-panel { display: none; flex-direction: column; gap: 10px; overflow: hidden; }
+    .dmk-panel.dmk-active { display: flex; }
+    .dmk-kpis-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+    .dmk-charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex:1; }
+    .dmk-chart-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px; padding: 12px; display: flex; flex-direction: column;
+    }
+    .dmk-chart-title { font-size: 11px; font-weight: 600; color: #bbb; display:flex; align-items:center; gap:5px; }
+    .dmk-chart-sub { font-size: 9px; color: #444; margin: 2px 0 8px; }
+    .dmk-legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+    .dmk-legend-item { display:flex; align-items:center; gap:4px; font-size:9px; color:#555; }
+    .dmk-legend-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+    .dmk-credits { margin-top:auto; padding:10px 8px 0; border-top:1px solid rgba(255,255,255,0.07); }
+    .dmk-credits-label { font-size:8px; color:#444; letter-spacing:0.08em; margin-bottom:5px; }
+    .dmk-credits-track { height:3px; background:rgba(255,255,255,0.07); border-radius:2px; overflow:hidden; margin-bottom:4px; }
+    .dmk-credits-fill { height:100%; background:#4ADE80; border-radius:2px; }
+    .dmk-credits-num { font-size:9px; color:#444; }
+    /* ── Nav hint ── */
+    .dmk-nav-hint {
+      font-size:8px; color:#383838; letter-spacing:0.06em;
+      padding: 4px 10px 8px; display:flex; align-items:center; gap:4px;
+    }
+    .dmk-nav-hint-dot {
+      width:4px; height:4px; border-radius:50%; background:#4ADE80;
+      animation: dmk-blink 1.4s ease-in-out infinite; flex-shrink:0;
+    }
+    @keyframes dmk-blink { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+    /* ── Nav hover nudge ── */
+    .dmk-nav-item { position:relative; transition: color 0.15s, background 0.15s; }
+    .dmk-nav-item:not(.dmk-nav-active):hover {
+      background: rgba(255,255,255,0.05);
+      color: #d0d0d0;
+      animation: dmk-nudge 0.35s ease;
+    }
+    @keyframes dmk-nudge {
+      0%   { transform: translateX(0); }
+      30%  { transform: translateX(5px); }
+      60%  { transform: translateX(2px); }
+      80%  { transform: translateX(4px); }
+      100% { transform: translateX(0); }
+    }
+    /* Arrow that appears on hover */
+    .dmk-nav-item::after {
+      content: '›';
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%) translateX(4px);
+      font-size: 12px; color: #4ADE80;
+      opacity: 0; transition: opacity 0.15s, transform 0.15s;
+    }
+    .dmk-nav-item:not(.dmk-nav-active):hover::after {
+      opacity: 1; transform: translateY(-50%) translateX(0);
+    }
+    /* Progress bar — purely decorative on active item */
+    .dmk-nav-progress {
+      position:absolute; bottom:0; left:10px; right:10px; height:1px;
+      background: rgba(74,222,128,0.4); border-radius:1px;
+      transform:scaleX(0); transform-origin:left; transition:none;
+    }
+    .dmk-nav-item.dmk-nav-active .dmk-nav-progress { transform:scaleX(1); }
+    .dmk-section-block { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:8px; overflow:hidden; }
+    .dmk-section-block-hd { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .dmk-section-block-title { font-size:11px; font-weight:600; color:#bbb; display:flex; align-items:center; gap:6px; }
+    .dmk-section-block-sub { font-size:9px; color:#444; padding:4px 12px 8px; }
+    .dmk-sc-table { width:100%; border-collapse:collapse; font-size:10px; }
+    .dmk-sc-table th { color:#444; font-size:9px; letter-spacing:0.06em; font-weight:600; padding:5px 10px; border-bottom:1px solid rgba(255,255,255,0.06); text-align:left; }
+    .dmk-sc-table td { padding:6px 10px; color:#888; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .dmk-sc-table .dmk-tr-total td { color:#bbb; font-weight:600; border-top:1px solid rgba(255,255,255,0.1); border-bottom:none; }
+    .dmk-type-badge { font-size:9px; font-weight:600; padding:2px 7px; border-radius:4px; }
+    .dmk-type-bot  { background:rgba(100,149,237,0.15); color:#6495ED; }
+    .dmk-type-exec { background:rgba(251,191,36,0.12); color:#FBBF24; }
+    .dmk-type-both { background:rgba(255,255,255,0.08); color:#999; }
+    .dmk-pct-green { color:#4ADE80; font-weight:700; }
+    .dmk-pct-blue  { color:#6495ED; font-weight:700; }
+    .dmk-pct-amber { color:#FBBF24; font-weight:700; }
+
+    /* Fade to bg at bottom of screenshot */
+    .hero-mockup-fade {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 55%;
+      background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
+      pointer-events: none;
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -1149,17 +1349,363 @@
 
     <p class="hero-trust">Líderes como BCI, Walmart, Dr. Max y Rosa Agustina ya miden con Cassper.</p>
 
-    <div class="hero-dashboard">
-      <div class="hero-dash-bar">
-        <div class="dash-dot" style="background:#F87171;"></div>
-        <div class="dash-dot" style="background:#FBBF24;margin-left:4px;"></div>
-        <div class="dash-dot" style="background:#4ADE80;margin-left:4px;"></div>
-        <span class="hero-dash-url">app.cassper.ai / venta-conversacional</span>
+    <div class="hero-mockup-wrap">
+      <div class="hero-mockup-frame">
+        <div class="hero-mockup-bar">
+          <div class="dash-dot" style="background:#F87171;"></div>
+          <div class="dash-dot" style="background:#FBBF24;"></div>
+          <div class="dash-dot" style="background:#4ADE80;"></div>
+          <span class="hero-mockup-url">app.cassper.ai / venta-conversacional</span>
+        </div>
+        <!-- ── Dashboard Mockup ── -->
+        <div class="dmk">
+          <!-- Sidebar -->
+          <aside class="dmk-sidebar">
+            <div class="dmk-brand">
+              <div class="dmk-brand-avatar">RD</div>
+              <div class="dmk-brand-name">Retail Demo</div>
+            </div>
+            <div class="dmk-section-label">VENTAS</div>
+            <div class="dmk-nav-hint"><div class="dmk-nav-hint-dot"></div>Navega el panel</div>
+            <nav class="dmk-nav" id="dmk-nav">
+              <a class="dmk-nav-item" onclick="switchDmkView('general',this)">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".5"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".5"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".5"/></svg>
+                Vista General
+                <div class="dmk-nav-progress"></div>
+              </a>
+              <a class="dmk-nav-item dmk-nav-active" onclick="switchDmkView('tickets',this)">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Tickets Recuperables
+                <div class="dmk-nav-progress"></div>
+              </a>
+              <a class="dmk-nav-item" onclick="switchDmkView('recuperacion',this)">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M1 1h2l1.5 7h7l1.5-5H4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="13.5" r="1" fill="currentColor"/><circle cx="11" cy="13.5" r="1" fill="currentColor"/></svg>
+                Recuperación
+                <div class="dmk-nav-progress"></div>
+              </a>
+              <a class="dmk-nav-item" onclick="switchDmkView('campanas',this)">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 2C5.8 2 4 3.8 4 6c0 3-2 4-2 4h12s-2-1-2-4c0-2.2-1.8-4-4-4z" stroke="currentColor" stroke-width="1.3"/><path d="M9.7 13a2 2 0 01-3.4 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                Campañas WA
+                <div class="dmk-nav-progress"></div>
+              </a>
+              <a class="dmk-nav-item" onclick="switchDmkView('historico',this)">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 12V6M7 12V3M11 12V8M15 12V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Histórico
+                <div class="dmk-nav-progress"></div>
+              </a>
+              <a class="dmk-nav-item" onclick="switchDmkView('ejecutivos',this)">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Ejecutivos
+                <div class="dmk-nav-progress"></div>
+              </a>
+            </nav>
+            <div class="dmk-section-label" style="margin-top:12px;">IA</div>
+            <div class="dmk-genia">
+              <div class="dmk-genia-dot"></div>
+              Preguntar a Genia
+              <span class="dmk-genia-kbd">⌘K</span>
+            </div>
+            <div class="dmk-credits">
+              <div class="dmk-credits-label">CRÉDITOS</div>
+              <div class="dmk-credits-track"><div class="dmk-credits-fill" style="width:80%"></div></div>
+              <div class="dmk-credits-num">7.970 / 10.000</div>
+            </div>
+          </aside>
+
+          <!-- Main panels -->
+          <main class="dmk-main">
+
+            <!-- ── Panel: Vista General ── -->
+            <div class="dmk-panel" id="dmk-panel-general">
+              <div class="dmk-topbar">
+                <div class="dmk-topbar-title">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="opacity:.6"><rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".5"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".5"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".5"/></svg>
+                  Venta conversacional
+                </div>
+                <div class="dmk-topbar-date"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 1v4M11 1v4M1 7h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> 29 mar 26 – 29 abr 26</div>
+              </div>
+              <div class="dmk-subtitle">Análisis de oportunidades comerciales y conversión de ventas</div>
+              <div class="dmk-channels">
+                <div class="dmk-ch-total"><div class="dmk-ch-num">1.811</div><div class="dmk-ch-label">CONVERSACIONES</div></div>
+                <div class="dmk-ch-sep"></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">X</span><span class="dmk-ch-v">0</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">FB</span><span class="dmk-ch-v">16</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">IG</span><span class="dmk-ch-v">51</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">WA</span><span class="dmk-ch-v">1.676</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">Chat</span><span class="dmk-ch-v">0</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">Email</span><span class="dmk-ch-v">68</span></div>
+              </div>
+              <div class="dmk-kpis-4">
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Conversaciones</div><div class="dmk-kpi-num">1.811</div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Tasa de Conversión</div><div class="dmk-kpi-num dmk-green">8.1% <span class="dmk-kpi-pct">(147)</span></div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Alta Intención</div><div class="dmk-kpi-num dmk-amber">14.7% <span class="dmk-kpi-pct">(267)</span></div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Canales activos</div><div class="dmk-kpi-num">4</div></div>
+              </div>
+              <div class="dmk-charts-row">
+                <div class="dmk-chart-card">
+                  <div class="dmk-chart-title">
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M2 13l3-4 3 2 3-5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Cobertura de análisis de ventas
+                  </div>
+                  <div class="dmk-chart-sub">Volumen analizado vs. total de conversaciones</div>
+                  <svg viewBox="0 0 340 110" fill="none" style="width:100%;flex:1;">
+                    <line x1="0" y1="30" x2="340" y2="30" stroke="#ffffff08"/>
+                    <line x1="0" y1="60" x2="340" y2="60" stroke="#ffffff08"/>
+                    <line x1="0" y1="90" x2="340" y2="90" stroke="#ffffff08"/>
+                    <path d="M0,90 C30,82 55,50 90,42 C125,34 145,72 185,62 C225,52 250,20 290,14 C310,11 325,30 340,28 L340,110 L0,110 Z" fill="rgba(100,149,237,0.15)"/>
+                    <path d="M0,90 C30,82 55,50 90,42 C125,34 145,72 185,62 C225,52 250,20 290,14 C310,11 325,30 340,28" stroke="#6495ED" stroke-width="1.5"/>
+                    <path d="M0,106 C60,104 120,101 180,97 C240,93 290,89 340,85" stroke="#FBBF24" stroke-width="1" stroke-dasharray="3,2"/>
+                    <text x="0" y="108" fill="#444" font-size="7" font-family="DM Sans">Oct</text>
+                    <text x="55" y="108" fill="#444" font-size="7" font-family="DM Sans">Nov</text>
+                    <text x="110" y="108" fill="#444" font-size="7" font-family="DM Sans">Dic</text>
+                    <text x="170" y="108" fill="#444" font-size="7" font-family="DM Sans">Ene</text>
+                    <text x="225" y="108" fill="#444" font-size="7" font-family="DM Sans">Feb</text>
+                    <text x="280" y="108" fill="#444" font-size="7" font-family="DM Sans">Mar</text>
+                  </svg>
+                  <div class="dmk-legend">
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#FBBF24"></div>% Cobertura</div>
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#6495ED"></div>Analizados</div>
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#555;border-radius:2px;"></div>Total Desk</div>
+                  </div>
+                </div>
+                <div class="dmk-chart-card" style="align-items:center;">
+                  <div class="dmk-chart-title" style="width:100%;">
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/></svg>
+                    Análisis de intención de venta
+                  </div>
+                  <div class="dmk-chart-sub" style="width:100%;">Distribución de la intención de venta</div>
+                  <svg viewBox="0 0 130 130" style="width:120px;height:120px;margin:4px auto 0;">
+                    <circle cx="65" cy="65" r="50" stroke="#1a1a2e" stroke-width="22"/>
+                    <circle cx="65" cy="65" r="50" stroke="#b4aaff" stroke-width="22" stroke-dasharray="267 314" stroke-dashoffset="0" transform="rotate(-90 65 65)"/>
+                    <circle cx="65" cy="65" r="50" stroke="#7c6fee" stroke-width="22" stroke-dasharray="47 314" stroke-dashoffset="-267" transform="rotate(-90 65 65)"/>
+                    <text x="65" y="61" text-anchor="middle" fill="#ccc" font-size="14" font-weight="700" font-family="DM Sans">15%</text>
+                    <text x="65" y="74" text-anchor="middle" fill="#666" font-size="8" font-family="DM Sans">Alta intención</text>
+                  </svg>
+                  <div class="dmk-legend" style="justify-content:center;margin-top:8px;">
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#7c6fee"></div>Alta intención</div>
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#b4aaff"></div>Baja intención</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Panel: Tickets Recuperables ── -->
+            <div class="dmk-panel dmk-active" id="dmk-panel-tickets">
+              <div class="dmk-topbar">
+                <div class="dmk-topbar-title"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="opacity:.6"><path d="M2 4h12M2 8h8M2 12h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Tickets Recuperables</div>
+                <div class="dmk-topbar-date"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 1v4M11 1v4M1 7h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> 29 mar 26 – 27 abr 26</div>
+              </div>
+              <div class="dmk-subtitle">Segmenta, prioriza y lanza campañas de recuperación vía WhatsApp con Cassper</div>
+              <div class="dmk-channels">
+                <div class="dmk-ch-total"><div class="dmk-ch-num">1.544</div><div class="dmk-ch-label">CONVERSACIONES</div></div>
+                <div class="dmk-ch-sep"></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">X</span><span class="dmk-ch-v">0</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">FB</span><span class="dmk-ch-v">12</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">IG</span><span class="dmk-ch-v">47</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">WA</span><span class="dmk-ch-v">1.419</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">Chat</span><span class="dmk-ch-v">0</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">Email</span><span class="dmk-ch-v">66</span></div>
+              </div>
+              <div class="dmk-kpis">
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Total perdidos</div><div class="dmk-kpi-num">1.420</div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Recuperables</div><div class="dmk-kpi-num dmk-green">1.372 <span class="dmk-kpi-pct">(97%)</span></div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Prioridad Alta</div><div class="dmk-kpi-num dmk-red">532</div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Prioridad Media</div><div class="dmk-kpi-num dmk-amber">842</div></div>
+                <div class="dmk-kpi dmk-kpi-highlight"><div class="dmk-kpi-label">Valor recuperable</div><div class="dmk-kpi-num dmk-green">$381.530.917</div></div>
+              </div>
+              <div class="dmk-table-header"><span>Tickets Recuperables (500)</span><div class="dmk-table-actions"><div class="dmk-search">Buscar por ID...</div><div class="dmk-btn-green">⊕ Crear campaña en Desk</div></div></div>
+              <div class="dmk-table-sub">Listado de tickets con potencial de recuperación</div>
+              <table class="dmk-table">
+                <thead><tr><th>ID TICKET</th><th>CANAL</th><th>FECHA</th><th>PRIORIDAD</th><th>URGENCIA</th><th>PRODUCTO</th><th>VALOR</th><th>TIPO DE ABANDONO</th></tr></thead>
+                <tbody>
+                  <tr><td>85179</td><td><span class="dmk-ch-pill dmk-wa">● WA</span></td><td>26-04-2026 06:31 p.m.</td><td><span class="dmk-badge dmk-badge-red">Alta</span></td><td><span class="dmk-badge dmk-badge-red-o">Urgente (24–48h)</span></td><td class="dmk-td-prod">Servicio de instalación cocina...</td><td class="dmk-td-val">$49.990</td><td>Carrito lleno abandonado</td></tr>
+                  <tr><td>85166</td><td><span class="dmk-ch-pill dmk-wa">● WA</span></td><td>26-04-2026 05:21 p.m.</td><td><span class="dmk-badge dmk-badge-red">Alta</span></td><td><span class="dmk-badge dmk-badge-red-o">Urgente (24–48h)</span></td><td class="dmk-td-prod">Microondas Black 2.0 24 Lts F...</td><td class="dmk-td-val">$1.289.940</td><td>Carrito lleno abandonado</td></tr>
+                  <tr><td>85160</td><td><span class="dmk-ch-pill dmk-wa">● WA</span></td><td>26-04-2026 04:42 p.m.</td><td><span class="dmk-badge dmk-badge-red">Alta</span></td><td><span class="dmk-badge dmk-badge-red-o">Urgente (24–48h)</span></td><td class="dmk-td-prod">Grifería flexible/extensible tip...</td><td class="dmk-td-val">$79.990</td><td>Abandono por precio</td></tr>
+                  <tr><td>85133</td><td><span class="dmk-ch-pill dmk-wa">● WA</span></td><td>26-04-2026 01:58 p.m.</td><td><span class="dmk-badge dmk-badge-red">Alta</span></td><td><span class="dmk-badge dmk-badge-amber-o">Esta semana</span></td><td class="dmk-td-prod">Refrigerador Black 518 Lts FDV</td><td class="dmk-td-val">$999.990</td><td>Carrito lleno abandonado</td></tr>
+                  <tr><td>85124</td><td><span class="dmk-ch-pill dmk-wa">● WA</span></td><td>26-04-2026 01:12 p.m.</td><td><span class="dmk-badge dmk-badge-red">Alta</span></td><td><span class="dmk-badge dmk-badge-amber-o">Esta semana</span></td><td class="dmk-td-prod">Encimera eléctrica 600x450</td><td class="dmk-td-val">$199.990</td><td>Abandono por precio</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- ── Panel: Recuperación ── -->
+            <div class="dmk-panel" id="dmk-panel-recuperacion">
+              <div class="dmk-topbar">
+                <div class="dmk-topbar-title"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="opacity:.6"><path d="M1 1h2l1.5 7h7l1.5-5H4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="13.5" r="1" fill="currentColor"/><circle cx="11" cy="13.5" r="1" fill="currentColor"/></svg>Ventas — Recuperación</div>
+                <div class="dmk-topbar-date"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 1v4M11 1v4M1 7h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> 29 mar 26 – 29 abr 26</div>
+              </div>
+              <div class="dmk-subtitle">Tickets con potencial de recuperación de venta — segmenta, prioriza y exporta para follow-up</div>
+              <div class="dmk-channels">
+                <div class="dmk-ch-total"><div class="dmk-ch-num">1.611</div><div class="dmk-ch-label">CONVERSACIONES</div></div>
+                <div class="dmk-ch-sep"></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">X</span><span class="dmk-ch-v">0</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">FB</span><span class="dmk-ch-v">16</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">IG</span><span class="dmk-ch-v">51</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">WA</span><span class="dmk-ch-v">1.676</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">Chat</span><span class="dmk-ch-v">0</span></div>
+                <div class="dmk-ch-item"><span class="dmk-ch-label">Email</span><span class="dmk-ch-v">68</span></div>
+              </div>
+              <div class="dmk-kpis">
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Total perdidos</div><div class="dmk-kpi-num">1.664</div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Recuperables</div><div class="dmk-kpi-num dmk-green">1.611 <span class="dmk-kpi-pct">(97%)</span></div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Prioridad Alta</div><div class="dmk-kpi-num dmk-red">638</div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Prioridad Media</div><div class="dmk-kpi-num dmk-amber">975</div></div>
+                <div class="dmk-kpi dmk-kpi-highlight"><div class="dmk-kpi-label">Valor recuperable</div><div class="dmk-kpi-num dmk-green">$442.052.525</div></div>
+              </div>
+              <div class="dmk-section-block">
+                <div class="dmk-section-block-hd">
+                  <div class="dmk-section-block-title"><svg width="11" height="11" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".4"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".4"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".4"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".4"/></svg>Tipos de Abandono</div>
+                  <span style="font-size:9px;color:#444;">Distribución de tickets recuperables por tipo</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:12px 16px;gap:12px;">
+                  <svg viewBox="0 0 130 130" style="width:110px;height:110px;margin:0 auto;">
+                    <circle cx="65" cy="65" r="48" stroke="#111" stroke-width="22"/>
+                    <circle cx="65" cy="65" r="48" stroke="#93C5FD" stroke-width="22" stroke-dasharray="75.4 301.6" stroke-dashoffset="0" transform="rotate(-90 65 65)"/>
+                    <circle cx="65" cy="65" r="48" stroke="#F9A8D4" stroke-width="22" stroke-dasharray="60.3 301.6" stroke-dashoffset="-75.4" transform="rotate(-90 65 65)"/>
+                    <circle cx="65" cy="65" r="48" stroke="#6EE7B7" stroke-width="22" stroke-dasharray="45.2 301.6" stroke-dashoffset="-135.7" transform="rotate(-90 65 65)"/>
+                    <circle cx="65" cy="65" r="48" stroke="#FDE68A" stroke-width="22" stroke-dasharray="45.2 301.6" stroke-dashoffset="-180.9" transform="rotate(-90 65 65)"/>
+                    <circle cx="65" cy="65" r="48" stroke="#C4B5FD" stroke-width="22" stroke-dasharray="30.2 301.6" stroke-dashoffset="-226.2" transform="rotate(-90 65 65)"/>
+                    <circle cx="65" cy="65" r="48" stroke="#FCA5A5" stroke-width="22" stroke-dasharray="45.2 301.6" stroke-dashoffset="-256.4" transform="rotate(-90 65 65)"/>
+                  </svg>
+                  <div class="dmk-legend" style="flex-direction:column;gap:5px;">
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#93C5FD"></div>Sin agregar al carro</div>
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#F9A8D4"></div>Carrito lleno abandonado</div>
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#6EE7B7"></div>Sin stock / no disponible</div>
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#FDE68A"></div>Proceso complejo</div>
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#C4B5FD"></div>Abandono por precio</div>
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#FCA5A5"></div>Falta de seguimiento</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Panel: Campañas WA ── -->
+            <div class="dmk-panel" id="dmk-panel-campanas">
+              <div class="dmk-topbar">
+                <div class="dmk-topbar-title"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="opacity:.6"><path d="M8 2C5.8 2 4 3.8 4 6c0 3-2 4-2 4h12s-2-1-2-4c0-2.2-1.8-4-4-4z" stroke="currentColor" stroke-width="1.3"/><path d="M9.7 13a2 2 0 01-3.4 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Campañas WhatsApp</div>
+                <div class="dmk-topbar-date"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 1v4M11 1v4M1 7h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> 29 mar 26 – 29 abr 26</div>
+              </div>
+              <div class="dmk-subtitle">Lanza campañas de recuperación masiva a tickets de alta intención</div>
+              <div class="dmk-kpis-4">
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Campañas activas</div><div class="dmk-kpi-num">3</div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Mensajes enviados</div><div class="dmk-kpi-num">1.247</div></div>
+                <div class="dmk-kpi"><div class="dmk-kpi-label">Tasa de respuesta</div><div class="dmk-kpi-num dmk-green">34.2%</div></div>
+                <div class="dmk-kpi dmk-kpi-highlight"><div class="dmk-kpi-label">Valor recuperado</div><div class="dmk-kpi-num dmk-green">$28.440.000</div></div>
+              </div>
+              <div class="dmk-section-block">
+                <div class="dmk-section-block-hd"><div class="dmk-section-block-title">Campañas recientes</div></div>
+                <table class="dmk-sc-table">
+                  <thead><tr><th>NOMBRE</th><th>ESTADO</th><th>ENVIADOS</th><th>RESPUESTAS</th><th>CONVERSIONES</th><th>VALOR RECUPERADO</th></tr></thead>
+                  <tbody>
+                    <tr><td>Recuperación Abril — Alta prioridad</td><td><span class="dmk-badge dmk-badge-green" style="background:rgba(74,222,128,0.12);color:#4ADE80;">Activa</span></td><td>532</td><td>187 (35.1%)</td><td>42</td><td class="dmk-val-green">$14.200.000</td></tr>
+                    <tr><td>Carrito abandonado — WA</td><td><span class="dmk-badge dmk-badge-green" style="background:rgba(74,222,128,0.12);color:#4ADE80;">Activa</span></td><td>410</td><td>130 (31.7%)</td><td>28</td><td class="dmk-val-green">$9.840.000</td></tr>
+                    <tr><td>Seguimiento cotizaciones Mar</td><td><span class="dmk-badge" style="background:rgba(255,255,255,0.07);color:#888;">Finalizada</span></td><td>305</td><td>89 (29.2%)</td><td>19</td><td class="dmk-val-green">$4.400.000</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ── Panel: Histórico ── -->
+            <div class="dmk-panel" id="dmk-panel-historico">
+              <div class="dmk-topbar">
+                <div class="dmk-topbar-title"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="opacity:.6"><path d="M3 12V6M7 12V3M11 12V8M15 12V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Ventas — Histórico</div>
+                <div class="dmk-topbar-date"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 1v4M11 1v4M1 7h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> 29 mar 26 – 29 abr 26</div>
+              </div>
+              <div class="dmk-subtitle">Evolución mensual de conversión, intención y valor estimado</div>
+              <div class="dmk-section-block">
+                <div class="dmk-section-block-hd"><div class="dmk-section-block-title"><svg width="11" height="11" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".4"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor" opacity=".4"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".4"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" opacity=".4"/></svg>Conversión Mensual</div></div>
+                <div class="dmk-section-block-sub">Volumen de tickets (barras) y tasa de conversión (línea)</div>
+                <div style="padding:0 16px 12px;">
+                  <svg viewBox="0 0 340 160" fill="none" style="width:100%;">
+                    <!-- Grid -->
+                    <line x1="40" y1="10" x2="40" y2="130" stroke="#ffffff08" stroke-width="1"/>
+                    <line x1="40" y1="10" x2="340" y2="10" stroke="#ffffff08"/>
+                    <line x1="40" y1="42" x2="340" y2="42" stroke="#ffffff08"/>
+                    <line x1="40" y1="74" x2="340" y2="74" stroke="#ffffff08"/>
+                    <line x1="40" y1="106" x2="340" y2="106" stroke="#ffffff08"/>
+                    <line x1="40" y1="130" x2="340" y2="130" stroke="#ffffff08"/>
+                    <!-- Y labels -->
+                    <text x="2" y="13" fill="#444" font-size="7" font-family="DM Sans">2.000</text>
+                    <text x="2" y="45" fill="#444" font-size="7" font-family="DM Sans">1.500</text>
+                    <text x="2" y="77" fill="#444" font-size="7" font-family="DM Sans">1.000</text>
+                    <text x="8" y="109" fill="#444" font-size="7" font-family="DM Sans">500</text>
+                    <text x="14" y="133" fill="#444" font-size="7" font-family="DM Sans">0</text>
+                    <!-- Bars (No convertidos pink, Convertidos green) -->
+                    <rect x="60" y="90" width="28" height="40" fill="#F9A8D4" rx="2"/>
+                    <rect x="60" y="86" width="28" height="4" fill="#6EE7B7" rx="1"/>
+                    <rect x="105" y="75" width="28" height="55" fill="#F9A8D4" rx="2"/>
+                    <rect x="105" y="70" width="28" height="5" fill="#6EE7B7" rx="1"/>
+                    <rect x="150" y="60" width="28" height="70" fill="#F9A8D4" rx="2"/>
+                    <rect x="150" y="54" width="28" height="6" fill="#6EE7B7" rx="1"/>
+                    <rect x="195" y="30" width="28" height="100" fill="#F9A8D4" rx="2"/>
+                    <rect x="195" y="22" width="28" height="8" fill="#6EE7B7" rx="1"/>
+                    <rect x="240" y="25" width="28" height="105" fill="#F9A8D4" rx="2"/>
+                    <rect x="240" y="17" width="28" height="8" fill="#6EE7B7" rx="1"/>
+                    <rect x="285" y="12" width="28" height="118" fill="#F9A8D4" rx="2"/>
+                    <rect x="285" y="10" width="28" height="12" fill="#6EE7B7" rx="1"/>
+                    <!-- Conversion rate line (right axis ~8%) -->
+                    <path d="M74,124 C104,122 134,120 164,117 C194,114 219,111 254,108 C274,106 298,103 299,100" stroke="#FBBF24" stroke-width="1.5" fill="none"/>
+                    <!-- X labels -->
+                    <text x="62" y="142" fill="#444" font-size="7" font-family="DM Sans">Nov</text>
+                    <text x="107" y="142" fill="#444" font-size="7" font-family="DM Sans">Dic</text>
+                    <text x="153" y="142" fill="#444" font-size="7" font-family="DM Sans">Ene</text>
+                    <text x="198" y="142" fill="#444" font-size="7" font-family="DM Sans">Feb</text>
+                    <text x="243" y="142" fill="#444" font-size="7" font-family="DM Sans">Mar</text>
+                    <text x="288" y="142" fill="#444" font-size="7" font-family="DM Sans">Abr</text>
+                    <!-- Right Y-axis labels -->
+                    <text x="316" y="13" fill="#FBBF24" font-size="6" font-family="DM Sans">100%</text>
+                    <text x="322" y="45" fill="#FBBF24" font-size="6" font-family="DM Sans">75%</text>
+                    <text x="322" y="77" fill="#FBBF24" font-size="6" font-family="DM Sans">50%</text>
+                    <text x="322" y="109" fill="#FBBF24" font-size="6" font-family="DM Sans">25%</text>
+                    <text x="325" y="133" fill="#FBBF24" font-size="6" font-family="DM Sans">0%</text>
+                  </svg>
+                  <div class="dmk-legend">
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#FBBF24;border-radius:2px;"></div>Tasa de conversión (%)</div>
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#6EE7B7"></div>Convertidos</div>
+                    <div class="dmk-legend-item"><div class="dmk-legend-dot" style="background:#F9A8D4"></div>No convertidos</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Panel: Ejecutivos ── -->
+            <div class="dmk-panel" id="dmk-panel-ejecutivos">
+              <div class="dmk-topbar">
+                <div class="dmk-topbar-title"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="opacity:.6"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Ventas — Ejecutivos</div>
+                <div class="dmk-topbar-date"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 1v4M11 1v4M1 7h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> 29 mar 26 – 29 abr 26</div>
+              </div>
+              <div class="dmk-subtitle">Desempeño de ejecutivos y bots en conversión de ventas</div>
+              <div class="dmk-section-block">
+                <div class="dmk-section-block-hd"><div class="dmk-section-block-title">Desempeño: Bot vs Ejecutivo</div></div>
+                <div class="dmk-section-block-sub">Scorecard por Tipo de Atención — Tickets, conversión y valor estimado desglosado por quién atendió</div>
+                <table class="dmk-sc-table">
+                  <thead><tr><th>ATENDIDO POR</th><th>TICKETS</th><th>CONVERTIDOS</th><th>TASA CONV.</th><th>VENTA CONCRETADA</th><th>VENTA PERDIDA</th><th>VALOR TOTAL</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="dmk-type-badge dmk-type-bot">bot</span></td><td>983</td><td>24</td><td><span class="dmk-pct-blue">2.4%</span></td><td class="dmk-val-green">$5.377.071</td><td class="dmk-val-red">$181.256.053</td><td>$186.633.124</td></tr>
+                    <tr><td><span class="dmk-type-badge dmk-type-exec">ejecutivo</span></td><td>721</td><td>121</td><td><span class="dmk-pct-green">16.8%</span></td><td class="dmk-val-green">$59.745.805</td><td class="dmk-val-red">$221.469.420</td><td>$281.215.225</td></tr>
+                    <tr><td><span class="dmk-type-badge dmk-type-both">ambos</span></td><td>107</td><td>2</td><td><span class="dmk-pct-blue">1.9%</span></td><td class="dmk-val-green">$473.470</td><td class="dmk-val-red">$40.645.862</td><td>$41.119.332</td></tr>
+                    <tr class="dmk-tr-total"><td>Total</td><td>1.811</td><td>147</td><td><span class="dmk-pct-green">8.1%</span></td><td class="dmk-val-green">$65.596.346</td><td class="dmk-val-red">$443.371.335</td><td>$508.967.681</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="dmk-section-block">
+                <div class="dmk-section-block-hd"><div class="dmk-section-block-title">Desempeño Individual por Ejecutivo / Bot</div></div>
+                <div class="dmk-section-block-sub">Scorecard Individual — Desempeño detallado por ejecutivo o bot específico</div>
+                <table class="dmk-sc-table">
+                  <thead><tr><th>NOMBRE</th><th>TIPO</th><th>TICKETS</th><th>CONVERTIDOS</th><th>TASA CONV.</th><th>VENTA CONCRETADA</th><th>VENTA PERDIDA</th><th>VALOR TOTAL</th></tr></thead>
+                  <tbody>
+                    <tr><td>Bot Agente Demo</td><td><span class="dmk-type-badge dmk-type-bot">bot</span></td><td>1.739</td><td>135</td><td><span class="dmk-pct-blue">7.8%</span></td><td class="dmk-val-green">$63.356.507</td><td class="dmk-val-red">$436.448.017</td><td>$499.804.524</td></tr>
+                    <tr><td>Ejecutivo 1</td><td><span class="dmk-type-badge dmk-type-exec">ejecutivo</span></td><td>312</td><td>58</td><td><span class="dmk-pct-green">18.6%</span></td><td class="dmk-val-green">$24.180.400</td><td class="dmk-val-red">$87.300.210</td><td>$111.480.610</td></tr>
+                    <tr><td>Ejecutivo 2</td><td><span class="dmk-type-badge dmk-type-exec">ejecutivo</span></td><td>248</td><td>39</td><td><span class="dmk-pct-green">15.7%</span></td><td class="dmk-val-green">$18.920.100</td><td class="dmk-val-red">$76.540.880</td><td>$95.460.980</td></tr>
+                    <tr><td>Ejecutivo 3</td><td><span class="dmk-type-badge dmk-type-exec">ejecutivo</span></td><td>161</td><td>24</td><td><span class="dmk-pct-blue">14.9%</span></td><td class="dmk-val-green">$16.645.305</td><td class="dmk-val-red">$57.628.330</td><td>$74.273.635</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </main>
+        </div>
       </div>
-      <div class="hero-dash-body">
-        <div class="hero-dash-label">Venta perdida del mes</div>
-        <div class="hero-dash-num">−$361M CLP</div>
-      </div>
+      <div class="hero-mockup-fade" aria-hidden="true"></div>
     </div>
 
   </section>
@@ -1758,6 +2304,13 @@
 </div>
 
 <script>
+  window.switchDmkView = function(id, btn) {
+    document.querySelectorAll('.dmk-panel').forEach(p => p.classList.remove('dmk-active'));
+    document.querySelectorAll('.dmk-nav-item').forEach(b => b.classList.remove('dmk-nav-active'));
+    document.getElementById('dmk-panel-' + id).classList.add('dmk-active');
+    btn.classList.add('dmk-nav-active');
+  };
+
   function switchCapVideo(id, btn) {
     // Pausar todos los videos
     document.getElementById('vid-auto').pause();
