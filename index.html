@@ -2334,74 +2334,85 @@
 <script>
   /* ── Scroll-progress animations ── */
   (function() {
+    // Selectores individuales (verificados contra el DOM real)
     const SINGLE = [
       '.logobar-inner',
-      '.anchor-section',
-      '.aha-section .section-label', '.aha-section h2', '.aha-section .section-sub',
-      '.aha-numbers', '.aha-note',
-      '.prob-section .section-label', '.prob-section h2', '.prob-section .section-sub',
-      '.cap-section .section-label',  '.cap-section h2',  '.cap-section .section-sub',
+      '.anchor-grid',
+      '.aha-inner',
+      '.aha-numbers',
+      '.problem-grid',
+      '.cap-grid',
       '.cap-video-switcher',
-      '.video-section .section-label', '.video-section h3', '.video-section .section-sub',
-      '.video-cta', '.storylane-wrap',
-      '.integrations-section .section-label', '.integrations-section h2',
-      '.integrations-section .section-sub', '.integrations-inner',
-      '.proof-section .section-label', '.proof-section h2',
-      '.testimony', '.case-studies',
-      '.steps-section .section-label', '.steps-section h2', '.steps-section .section-sub',
-      '.faq-section h2',
+      '.video-section .video-inner',
+      '.storylane-wrap',
+      '.integrations-inner',
+      '.testimony',
+      '.stats-row',
+      '.case-studies',
+      '.steps-wrap',
+      '.faq-list',
       '.cta-final-inner',
     ];
+
+    // Stagger por hijos: [parent, child, gap en px]
     const STAGGER = [
-      ['.anchor-grid',  '.anchor-card',    60],
-      ['.prob-cards',   '.prob-card',       70],
-      ['.cap-grid',     '.cap-card',        70],
-      ['.stats-grid',   '.stat-item',       60],
-      ['.steps-grid',   '.step-item',       70],
-      ['.faq-list',     '.faq-item',        50],
+      ['.anchor-grid',   '.anchor-card',   70],
+      ['.problem-grid',  '.problem-card',  80],
+      ['.cap-grid',      '.cap-card',      80],
+      ['.case-studies',  '.case-card',     70],
+      ['.faq-list',      '.faq-item',      55],
     ];
 
-    // items: { el, staggerPx }
-    // staggerPx shifts when the element starts animating (later index = later start)
-    const items = [];
+    // También animar todos los .label y .h2 fuera del hero
+    const GENERIC = ['.label', '.h2', '.body-lg'];
 
+    const items = [];
     function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
     function collectItems() {
-      const skip = el => el.closest('.hero') || el.closest('.dmk');
+      const skip = el => el.closest('.hero') || el.closest('.dmk') || el.closest('nav');
+      const seen = new WeakSet();
+
+      const add = (el, stagger) => {
+        if (!el || skip(el) || seen.has(el)) return;
+        seen.add(el);
+        items.push({ el, stagger });
+      };
 
       SINGLE.forEach(sel =>
-        document.querySelectorAll(sel).forEach(el => {
-          if (!skip(el)) items.push({ el, stagger: 0 });
-        })
+        document.querySelectorAll(sel).forEach(el => add(el, 0))
       );
 
-      STAGGER.forEach(([parent, child, gap]) => {
-        document.querySelectorAll(parent).forEach(p =>
-          p.querySelectorAll(child).forEach((el, i) => {
-            if (!skip(el)) items.push({ el, stagger: i * gap });
-          })
-        );
-      });
+      GENERIC.forEach(sel =>
+        document.querySelectorAll(sel).forEach(el => add(el, 0))
+      );
 
-      // Set initial state
-      items.forEach(({ el }) => el.classList.add('a-sp'));
+      STAGGER.forEach(([parent, child, gap]) =>
+        document.querySelectorAll(parent).forEach(p =>
+          p.querySelectorAll(child).forEach((el, i) => add(el, i * gap))
+        )
+      );
+
+      // Estado inicial
+      items.forEach(({ el }) => {
+        el.style.opacity   = '0';
+        el.style.transform = 'translateY(28px)';
+        el.style.willChange = 'opacity, transform';
+      });
     }
 
     function tick() {
       const vh = window.innerHeight;
-      // Zone: animation goes from 0→1 as element moves from [vh+20] to [vh*0.55] in getBCR.top
-      const zoneStart = vh + 20;
-      const zoneEnd   = vh * 0.55;
-      const zoneRange = zoneStart - zoneEnd;
+      const zoneSize = vh * 0.35; // zona de entrada: 35% del viewport
 
       items.forEach(({ el, stagger }) => {
-        const top = el.getBoundingClientRect().top;
-        // Stagger shifts the start up, so later items need a bit more scroll
-        const raw = (zoneStart - stagger - top) / zoneRange;
-        const p   = easeOutCubic(Math.min(1, Math.max(0, raw)));
+        const top  = el.getBoundingClientRect().top;
+        // raw=0 cuando el tope del elemento toca la base de pantalla
+        // raw=1 cuando ha subido zoneSize px hacia el centro
+        const raw  = (vh - top - stagger) / zoneSize;
+        const p    = easeOutCubic(Math.min(1, Math.max(0, raw)));
         el.style.opacity   = p;
-        el.style.transform = `translateY(${(1 - p) * 26}px)`;
+        el.style.transform = `translateY(${(1 - p) * 28}px)`;
       });
     }
 
@@ -2412,7 +2423,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       collectItems();
-      tick(); // initial pass for above-fold
+      tick();
       window.addEventListener('scroll', onScroll, { passive: true });
     });
   })();
