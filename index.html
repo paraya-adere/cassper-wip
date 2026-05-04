@@ -1321,15 +1321,11 @@
   .hero-trust      { animation: a-up 0.5s ease 0.58s both; }
   .hero-mockup-wrap{ animation: a-mockup 1s ease 0.68s both; }
 
-  /* Scroll-triggered base */
-  .a-init {
+  /* Scroll-progress base — controlado por JS */
+  .a-sp {
     opacity: 0;
-    transform: translateY(26px);
-    transition: opacity 0.65s ease, transform 0.65s ease;
-  }
-  .a-init.a-visible {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(28px);
+    will-change: opacity, transform;
   }
 
   </style>
@@ -2336,87 +2332,88 @@
 </div>
 
 <script>
-  /* ── Entrance animations (scroll-triggered) ── */
+  /* ── Scroll-progress animations ── */
   (function() {
-    // Individual elements
     const SINGLE = [
       '.logobar-inner',
-      '.grid-reveal',
       '.anchor-section',
-      '.aha-section .section-label',
-      '.aha-section h2',
-      '.aha-section .section-sub',
-      '.aha-numbers',
-      '.aha-note',
-      '.prob-section .section-label',
-      '.prob-section h2',
-      '.prob-section .section-sub',
-      '.cap-section .section-label',
-      '.cap-section h2',
-      '.cap-section .section-sub',
+      '.aha-section .section-label', '.aha-section h2', '.aha-section .section-sub',
+      '.aha-numbers', '.aha-note',
+      '.prob-section .section-label', '.prob-section h2', '.prob-section .section-sub',
+      '.cap-section .section-label',  '.cap-section h2',  '.cap-section .section-sub',
       '.cap-video-switcher',
-      '.video-section .section-label',
-      '.video-section h3',
-      '.video-section .section-sub',
-      '.video-cta',
-      '.storylane-wrap',
-      '.integrations-section .section-label',
-      '.integrations-section h2',
-      '.integrations-section .section-sub',
-      '.integrations-inner',
-      '.proof-section .section-label',
-      '.proof-section h2',
-      '.testimony',
-      '.case-studies',
-      '.steps-section .section-label',
-      '.steps-section h2',
-      '.steps-section .section-sub',
+      '.video-section .section-label', '.video-section h3', '.video-section .section-sub',
+      '.video-cta', '.storylane-wrap',
+      '.integrations-section .section-label', '.integrations-section h2',
+      '.integrations-section .section-sub', '.integrations-inner',
+      '.proof-section .section-label', '.proof-section h2',
+      '.testimony', '.case-studies',
+      '.steps-section .section-label', '.steps-section h2', '.steps-section .section-sub',
       '.faq-section h2',
       '.cta-final-inner',
     ];
-
-    // Staggered children: [parent selector, child selector]
     const STAGGER = [
-      ['.anchor-grid',   '.anchor-card'],
-      ['.prob-cards',    '.prob-card'],
-      ['.cap-grid',      '.cap-card'],
-      ['.stats-grid',    '.stat-item'],
-      ['.steps-grid',    '.step-item'],
-      ['.faq-list',      '.faq-item'],
-      ['.logobar-logos', '.logobar-name, .logobar-sep'],
+      ['.anchor-grid',  '.anchor-card',    60],
+      ['.prob-cards',   '.prob-card',       70],
+      ['.cap-grid',     '.cap-card',        70],
+      ['.stats-grid',   '.stat-item',       60],
+      ['.steps-grid',   '.step-item',       70],
+      ['.faq-list',     '.faq-item',        50],
     ];
 
-    document.addEventListener('DOMContentLoaded', function() {
+    // items: { el, staggerPx }
+    // staggerPx shifts when the element starts animating (later index = later start)
+    const items = [];
+
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function collectItems() {
       const skip = el => el.closest('.hero') || el.closest('.dmk');
-      const els = new Set();
 
       SINGLE.forEach(sel =>
-        document.querySelectorAll(sel).forEach(el => { if (!skip(el)) els.add(el); })
+        document.querySelectorAll(sel).forEach(el => {
+          if (!skip(el)) items.push({ el, stagger: 0 });
+        })
       );
 
-      STAGGER.forEach(([parent, child]) => {
-        document.querySelectorAll(parent).forEach(p => {
+      STAGGER.forEach(([parent, child, gap]) => {
+        document.querySelectorAll(parent).forEach(p =>
           p.querySelectorAll(child).forEach((el, i) => {
-            if (!skip(el)) {
-              el.style.transitionDelay = (i * 0.08) + 's';
-              els.add(el);
-            }
-          });
-        });
+            if (!skip(el)) items.push({ el, stagger: i * gap });
+          })
+        );
       });
 
-      els.forEach(el => el.classList.add('a-init'));
+      // Set initial state
+      items.forEach(({ el }) => el.classList.add('a-sp'));
+    }
 
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('a-visible');
-            obs.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+    function tick() {
+      const vh = window.innerHeight;
+      // Zone: animation goes from 0→1 as element moves from [vh+20] to [vh*0.55] in getBCR.top
+      const zoneStart = vh + 20;
+      const zoneEnd   = vh * 0.55;
+      const zoneRange = zoneStart - zoneEnd;
 
-      els.forEach(el => obs.observe(el));
+      items.forEach(({ el, stagger }) => {
+        const top = el.getBoundingClientRect().top;
+        // Stagger shifts the start up, so later items need a bit more scroll
+        const raw = (zoneStart - stagger - top) / zoneRange;
+        const p   = easeOutCubic(Math.min(1, Math.max(0, raw)));
+        el.style.opacity   = p;
+        el.style.transform = `translateY(${(1 - p) * 26}px)`;
+      });
+    }
+
+    let rafId = null;
+    function onScroll() {
+      if (!rafId) rafId = requestAnimationFrame(() => { tick(); rafId = null; });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      collectItems();
+      tick(); // initial pass for above-fold
+      window.addEventListener('scroll', onScroll, { passive: true });
     });
   })();
 
